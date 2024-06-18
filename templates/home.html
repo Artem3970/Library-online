@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Online</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333333;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+            color: #000000;
+            cursor: pointer;
+            transition: color 0.3s ease-in-out;
+        }
+        .header h1:hover {
+            color: #0056b3;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .search-container {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-form {
+            display: inline-block;
+            padding: 8px;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .search-form:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-input {
+            width: 200px;
+            padding: 8px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .search-button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        .filter-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .filter-container select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+        }
+        .book-card {
+            width: 300px;
+            margin: 20px;
+            padding: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .book-card:hover {
+            transform: scale(1.05);
+        }
+        .book-card-content {
+            padding: 15px;
+            text-align: center;
+        }
+        .book-card h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #333333;
+            margin-bottom: 10px;
+        }
+        .book-card p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666666;
+        }
+        .buy-book-button {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .buy-book-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 onclick="window.location.href='/'">Library Online</h1>
+        <div class="search-container">
+            <form action="/search/" method="GET" class="search-form">
+                <input type="text" name="query" class="search-input" placeholder="Пошук...">
+                <button type="submit" class="search-button">Знайти</button>
+            </form>
+        </div>
+    </div>
+    <div class="filter-container">
+        <form method="GET" action="/">
+            <select name="category" onchange="this.form.submit()">
+                <option value="">Всі категорії</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+    <div class="container">
+        {% for book in books %}
+            <div class="book-card">
+                <div class="book-card-content">
+                    <h2>{{ book.book_name }}</h2>
+                    <p><strong>Автор:</strong> {{ book.book_author }}</p>
+                    <p><strong>Категорія:</strong> {{ book.book_category.name }}</p>
+                    <p><strong>Вміст:</strong> {{ book.content|truncatewords:20 }}</p>
+                    <p><strong>Рік видання:</strong> {{ book.publication_year }}</p>
+                    <p><strong>Мова:</strong> {{ book.language }}</p>
+                    <a href="/read_book/{{ book.id }}" class="buy-book-button">Читати</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

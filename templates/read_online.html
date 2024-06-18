@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.book_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f7f7;
+            color: #333333;
+        }
+        .header {
+            background-color: #ffffff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #000000;
+            cursor: pointer;
+        }
+        .header a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 16px;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .header a:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333333;
+        }
+        .book-content {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 onclick="window.location.href='/'">Library Online</h1>
+        <a href="/read_book/{{ book.id }}" class="back-button">Повернутися</a>
+    </div>
+    <div class="container">
+        <h2>{{ book.book_name }}</h2>
+        <div class="book-content">
+            {{ book.content|safe }}
+        </div>
+    </div>
+</body>
+</html>
